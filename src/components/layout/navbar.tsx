@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { useScroll } from '@/hooks/use-scroll'
 import { cn, nFormatter } from '@/lib/utils'
 import { buttonLinkVariants } from '../app-ui/button-link'
+import { SubmitProjectButton } from '../projects/submit-project-button'
 // import UserDropdown from './user-dropdown'
 
 export default function NavBar({ stars }: { stars: number }) {
@@ -31,20 +32,7 @@ export default function NavBar({ stars }: { stars: number }) {
             <Star className='h-4 w-4' />
             <p className='text-sm'>{nFormatter(stars, { full: true })}</p>
           </a>
-          {/* <SubmitProjectButton /> */}
-          <button
-            className={cn(buttonLinkVariants(), 'px-3 py-1.5')}
-            // disabled={status === 'loading'}
-            // onClick={() => {
-            //   if (session) {
-            //     setShowSubmitProjectModal(true)
-            //   } else {
-            //     setShowSignInModal(true)
-            //   }
-            // }}
-          >
-            Submit
-          </button>
+          <SubmitProjectButton />
           {/* {session && <UserDropdown session={session} />} */}
         </div>
       </div>
