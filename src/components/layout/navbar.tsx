@@ -32,6 +32,19 @@ export default function NavBar({ stars }: { stars: number }) {
             <p className='text-sm'>{nFormatter(stars, { full: true })}</p>
           </a>
           {/* <SubmitProjectButton /> */}
+          <button
+            className={cn(buttonLinkVariants(), 'px-3 py-1.5')}
+            // disabled={status === 'loading'}
+            // onClick={() => {
+            //   if (session) {
+            //     setShowSubmitProjectModal(true)
+            //   } else {
+            //     setShowSignInModal(true)
+            //   }
+            // }}
+          >
+            Submit
+          </button>
           {/* {session && <UserDropdown session={session} />} */}
         </div>
       </div>
