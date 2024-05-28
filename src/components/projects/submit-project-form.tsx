@@ -1,12 +1,13 @@
 'use client'
 
-import { submitProject } from '@/lib/actions/submit-project'
-import { Button, useMediaQuery } from '@dub/ui'
+import { useMediaQuery } from '@/hooks/use-media-query'
 import { AlertCircle } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { Dispatch, SetStateAction, useEffect } from 'react'
 import { useFormState, useFormStatus } from 'react-dom'
 import { toast } from 'sonner'
+import { Button } from '../ui/button'
+import { submitProject } from '@/lib/actions/submit-project'
 
 const initialState = {
   error: null,

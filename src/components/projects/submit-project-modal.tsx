@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { Dispatch, SetStateAction, useCallback, useMemo, useState } from 'react'
 import { Modal } from '../ui/modal'
+import SubmitProjectForm from './submit-project-form'
 // import SubmitProjectForm from './submit-project-form'
 
 const SubmitProjectModal = ({
@@ -27,8 +28,7 @@ const SubmitProjectModal = ({
         </p>
       </div>
 
-      {/* <SubmitProjectForm setShowSubmitProjectModal={setShowSubmitProjectModal} /> */}
-      <h1>Submit Project Form</h1>
+      <SubmitProjectForm setShowSubmitProjectModal={setShowSubmitProjectModal} />
     </Modal>
   )
 }
