@@ -1,6 +1,6 @@
-// import ProjectList from '@/components/projects/project-list'
 // import SearchBar, { SearchBarPlaceholder } from '@/components/ui/search-bar'
 import Twitter from '@/components/icons/twitter'
+import ProjectList from '@/components/projects/project-list'
 import { Suspense } from 'react'
 
 export default function Home() {
@@ -43,7 +43,7 @@ export default function Home() {
         className='animate-fade-up opacity-0'
         style={{ animationDelay: '0.35s', animationFillMode: 'forwards' }}
       >
-        {/* <ProjectList /> */}
+        <ProjectList />
       </div>
     </>
   )
