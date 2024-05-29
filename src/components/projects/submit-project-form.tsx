@@ -1,42 +1,71 @@
 'use client'
 
 import { useMediaQuery } from '@/hooks/use-media-query'
-import { AlertCircle } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { Dispatch, SetStateAction, useEffect } from 'react'
-import { useFormState, useFormStatus } from 'react-dom'
+import { Dispatch, SetStateAction, SyntheticEvent, useState } from 'react'
 import { toast } from 'sonner'
 import { Button } from '../ui/button'
 import { submitProject } from '@/lib/actions/submit-project'
-
-const initialState = {
-  error: null,
-}
+import { Input } from '../ui/input'
 
 export default function SubmitProjectForm({
   setShowSubmitProjectModal,
 }: {
   setShowSubmitProjectModal: Dispatch<SetStateAction<boolean>>
 }) {
-  const [state, formAction] = useFormState(submitProject, initialState)
-  const { isMobile } = useMediaQuery()
+  const [url, setUrl] = useState('')
+  const [loading, setLoading] = useState(false)
 
+  const { isMobile } = useMediaQuery()
   const router = useRouter()
 
-  useEffect(() => {
-    if (state?.redirect) {
-      router.push(state.redirect)
+  const onSubmit = async (inputUrl: string) => {
+    try {
+      setLoading(true)
+      const result = await submitProject(inputUrl)
+      setUrl('')
       toast.success('Successfully submitted project!')
       setShowSubmitProjectModal(false)
+    } catch (error) {
+      console.log(error)
+      toast.error(`Unable to add bookmark, try again.`)
+    } finally {
+      setLoading(false)
     }
-  }, [state?.redirect])
+  }
 
   return (
-    <form action={formAction} className='flex flex-col space-y-4 bg-gray-50 px-4 py-8 md:px-16'>
+    <form
+      onSubmit={async (event: SyntheticEvent<HTMLFormElement>) => {
+        event.preventDefault()
+        await onSubmit(url)
+      }}
+      className='flex flex-col space-y-4 bg-gray-50 px-4 py-8 md:px-16'
+    >
       <label htmlFor='github'>
         <span className='text-sm font-medium text-gray-900'>GitHub Repository</span>
         <div className='relative mt-1'>
-          <input
+          <Input
+            autoComplete='off'
+            inputMode='text'
+            type='url'
+            pattern='https://.*|http://.*'
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              setUrl(event.target.value)
+            }}
+            value={url}
+            data-1p-ignore
+            name='github'
+            id='github'
+            autoFocus={!isMobile}
+            required
+            placeholder='https://github.com/dubinc/dub'
+            className={
+              'border-gray-300 text-gray-900 placeholder-gray-400 focus:border-gray-500 focus:ring-gray-500 w-full rounded-md focus:outline-none sm:text-sm'
+            }
+          />
+
+          {/* <input
             name='github'
             id='github'
             autoFocus={!isMobile}
@@ -57,20 +86,15 @@ export default function SubmitProjectForm({
                 aria-hidden='true'
               />
             </div>
-          )}
+          )} */}
         </div>
-        {state?.error && (
+        {/* {state?.error && (
           <p className='mt-1 text-sm text-red-600' id='form-error'>
             {state?.error}
           </p>
-        )}
+        )} */}
       </label>
-      <FormButton />
+      <Button text='Submit' disabled={loading} />
     </form>
   )
-}
-
-const FormButton = () => {
-  const { pending } = useFormStatus()
-  return <Button text='Submit' loading={pending} />
 }

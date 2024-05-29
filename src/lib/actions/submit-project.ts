@@ -1,74 +1,64 @@
 'use server'
 
-// export async function submitProject(_prevState: any, data: FormData) {
-//   const session = await authUser()
+import slugify from '@sindresorhus/slugify'
+import { getRepo } from '../github'
+import { getUrlFromString, nanoid } from '../utils'
+import prisma from '@/lib/prisma'
+import { PROJECT_GRADIENTS } from '@/components/projects/project-constants'
 
-//   const github = getUrlFromString(data.get('github') as string)
+export async function submitProject(url: string) {
+  const github = getUrlFromString(url)
+  if (!github) throw new Error('Please provide a GitHub repository')
 
-//   if (!github) {
-//     return { error: 'Please provide a GitHub repository' }
-//   }
+  const githubExists = await prisma.link.findUnique({
+    where: { url: github },
+  })
+  if (githubExists) throw new Error('This GitHub repository is already submitted')
 
-//   const githubExists = await prisma.link.findUnique({
-//     where: { url: github },
-//   })
+  const githubData = await getRepo(github)
+  if (!githubData.name) throw new Error('Invalid GitHub repository')
 
-//   if (githubExists) {
-//     return { error: 'This GitHub repository is already submitted' }
-//   }
+  const slugExists = await prisma.project.findUnique({
+    where: { slug: slugify(githubData.name) },
+  })
 
-//   const githubData = await getRepo(github)
+  const project = await prisma.project.create({
+    data: {
+      name: githubData.name,
+      description: githubData.description || '',
+      slug: slugExists ? `${slugify(githubData.name)}-${nanoid(3)}` : slugify(githubData.name),
+      logo: githubData.logo,
+      gradient: PROJECT_GRADIENTS[Math.floor(Math.random() * PROJECT_GRADIENTS.length)],
+      stars: githubData.stars,
+      verified: githubData.stars > 1000, // automatically verify projects with > 1000 stars
+      // users: {
+      //   create: {
+      //     userId: 'test',
+      //     role: 'Submitter',
+      //   },
+      // },
+    },
+  })
 
-//   if (!githubData.name) {
-//     return { error: 'Invalid GitHub repository' }
-//   }
+  // await Promise.all([
+  //   shortenAndCreateLink({
+  //     url: github,
+  //     type: 'GITHUB',
+  //     projectId: project.id,
+  //   }),
+  //   githubData.homepage &&
+  //     shortenAndCreateLink({
+  //       url: githubData.homepage,
+  //       type: 'WEBSITE',
+  //       projectId: project.id,
+  //     }),
+  //   typesense().collections('projects').documents().create({
+  //     id: project.id,
+  //     name: project.name,
+  //     description: project.description,
+  //     slug: project.slug,
+  //   }),
+  // ])
 
-//   const slugExists = await prisma.project.findUnique({
-//     where: { slug: slugify(githubData.name) },
-//   })
-
-//   const project = await prisma.project.create({
-//     data: {
-//       name: githubData.name,
-//       description: githubData.description || '',
-//       slug: slugExists ? `${slugify(githubData.name)}-${nanoid(3)}` : slugify(githubData.name),
-//       logo: githubData.logo,
-//       gradient: PROJECT_GRADIENTS[Math.floor(Math.random() * PROJECT_GRADIENTS.length)],
-//       stars: githubData.stars,
-//       verified: githubData.stars > 1000, // automatically verify projects with > 1000 stars
-//       users: {
-//         create: {
-//           userId: session.user.id,
-//           role: 'Submitter',
-//         },
-//       },
-//     },
-//   })
-
-//   await Promise.all([
-//     shortenAndCreateLink({
-//       url: github,
-//       type: 'GITHUB',
-//       projectId: project.id,
-//     }),
-//     githubData.homepage &&
-//       shortenAndCreateLink({
-//         url: githubData.homepage,
-//         type: 'WEBSITE',
-//         projectId: project.id,
-//       }),
-//     typesense().collections('projects').documents().create({
-//       id: project.id,
-//       name: project.name,
-//       description: project.description,
-//       slug: project.slug,
-//     }),
-//   ])
-
-//   return { redirect: `/projects/${project.slug}` }
-// }
-
-export async function submitProject(_prevState: any, data: FormData) {
-  console.log(data)
-  return { redirect: `/projects/hello` }
+  return { redirect: `/projects/${project.slug}` }
 }
