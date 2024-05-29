@@ -5,6 +5,8 @@ import { getRepo } from '../github'
 import { getUrlFromString, nanoid } from '../utils'
 import prisma from '@/lib/prisma'
 import { PROJECT_GRADIENTS } from '@/components/projects/project-constants'
+import { shortenAndCreateLink } from '../dub'
+import typesense from '../typesense'
 
 export async function submitProject(url: string) {
   const github = getUrlFromString(url)
@@ -40,25 +42,25 @@ export async function submitProject(url: string) {
     },
   })
 
-  // await Promise.all([
-  //   shortenAndCreateLink({
-  //     url: github,
-  //     type: 'GITHUB',
-  //     projectId: project.id,
-  //   }),
-  //   githubData.homepage &&
-  //     shortenAndCreateLink({
-  //       url: githubData.homepage,
-  //       type: 'WEBSITE',
-  //       projectId: project.id,
-  //     }),
-  //   typesense().collections('projects').documents().create({
-  //     id: project.id,
-  //     name: project.name,
-  //     description: project.description,
-  //     slug: project.slug,
-  //   }),
-  // ])
+  await Promise.all([
+    shortenAndCreateLink({
+      url: github,
+      type: 'GITHUB',
+      projectId: project.id,
+    }),
+    githubData.homepage &&
+      shortenAndCreateLink({
+        url: githubData.homepage,
+        type: 'WEBSITE',
+        projectId: project.id,
+      }),
+    typesense().collections('projects').documents().create({
+      id: project.id,
+      name: project.name,
+      description: project.description,
+      slug: project.slug,
+    }),
+  ])
 
   return { redirect: `/projects/${project.slug}` }
 }

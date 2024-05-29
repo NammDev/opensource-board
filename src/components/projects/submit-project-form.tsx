@@ -23,6 +23,7 @@ export default function SubmitProjectForm({
     try {
       setLoading(true)
       const result = await submitProject(inputUrl)
+      router.push(result.redirect)
       setUrl('')
       toast.success('Successfully submitted project!')
       setShowSubmitProjectModal(false)
