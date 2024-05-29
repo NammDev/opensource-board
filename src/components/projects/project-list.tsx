@@ -1,6 +1,7 @@
 import prisma from '@/lib/prisma'
 import { Suspense } from 'react'
 import ProjectGrid from './project-grid'
+import { Project } from '@prisma/client'
 
 export default function ProjectList() {
   return (
@@ -11,18 +12,19 @@ export default function ProjectList() {
 }
 
 async function ProjectListRSC() {
-  const featured = ['gallery', 'dub', 'ui']
+  const featured = ['oss-gallery', 'dub', 'ui']
   const projects = await prisma.project.findMany({
-    where: {
-      verified: true,
-    },
+    // where: {
+    //   verified: true,
+    // },
     orderBy: {
       stars: 'desc',
     },
   })
 
-  const featuredProjects =
-    featured.map((slug) => projects.find((project) => project.slug === slug)) ?? []
+  const featuredProjects = featured.map((slug) =>
+    projects.find((project) => project.slug === slug)
+  ) as Project[]
 
   return (
     <div className='mx-5 md:mx-0'>
