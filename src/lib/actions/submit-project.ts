@@ -33,12 +33,12 @@ export async function submitProject(url: string) {
       gradient: PROJECT_GRADIENTS[Math.floor(Math.random() * PROJECT_GRADIENTS.length)],
       stars: githubData.stars,
       verified: githubData.stars > 500, // automatically verify projects with > 1000 stars
-      // users: {
-      //   create: {
-      //     userId: 'test',
-      //     role: 'Submitter',
-      //   },
-      // },
+      users: {
+        create: {
+          userId: 'test',
+          role: 'Submitter',
+        },
+      },
     },
   })
 

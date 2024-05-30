@@ -3,6 +3,7 @@ import { twMerge } from 'tailwind-merge'
 import type { Metadata } from 'next'
 import ms from 'ms'
 import { customAlphabet } from 'nanoid'
+import { User } from '@clerk/nextjs/dist/types/server'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -127,4 +128,18 @@ export const nanoid = (chars?: number) => {
     '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
     chars || 7 // 7-character random string by default
   )()
+}
+
+export function getUserEmail(user: User | null) {
+  const email =
+    user?.emailAddresses?.find((e) => e.id === user.primaryEmailAddressId)?.emailAddress ?? ''
+  return email
+}
+
+export function getUsernameFromEmail(email: string) {
+  const atIndex = email.indexOf('@')
+  if (atIndex !== -1) {
+    return email.substring(0, atIndex)
+  }
+  return ''
 }

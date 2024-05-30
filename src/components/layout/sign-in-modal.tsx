@@ -3,6 +3,8 @@ import { Dispatch, SetStateAction, useCallback, useMemo, useState } from 'react'
 import { Modal } from '../ui/modal'
 import { Button } from '../ui/button'
 import Github from '../icons/github'
+import { useSignIn } from '@clerk/nextjs'
+import { type OAuthStrategy } from '@clerk/types'
 
 const SignInModal = ({
   showSignInModal,
@@ -11,7 +13,25 @@ const SignInModal = ({
   showSignInModal: boolean
   setShowSignInModal: Dispatch<SetStateAction<boolean>>
 }) => {
+  const { isLoaded, signIn } = useSignIn()
   const [signInClicked, setSignInClicked] = useState(false)
+
+  async function oauthSignIn(provider: OAuthStrategy) {
+    console.log('in here')
+    if (!isLoaded) return null
+    try {
+      console.log('before signin')
+      await signIn.authenticateWithRedirect({
+        strategy: provider,
+        redirectUrl: '/sso-callback',
+        redirectUrlComplete: '/auth-callback',
+      })
+    } catch (err) {
+      console.log(err)
+    } finally {
+      setSignInClicked(true)
+    }
+  }
 
   return (
     <Modal showModal={showSignInModal} setShowModal={setShowSignInModal}>
@@ -40,8 +60,7 @@ const SignInModal = ({
           variant='secondary'
           loading={signInClicked}
           onClick={() => {
-            setSignInClicked(true)
-            // signIn('github')
+            oauthSignIn('oauth_google')
           }}
         />
       </div>
