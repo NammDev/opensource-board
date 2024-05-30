@@ -14,9 +14,9 @@ export default function ProjectList() {
 async function ProjectListRSC() {
   const featured = ['oss-gallery', 'dub', 'ui']
   const projects = await prisma.project.findMany({
-    // where: {
-    //   verified: true,
-    // },
+    where: {
+      verified: true,
+    },
     orderBy: {
       stars: 'desc',
     },

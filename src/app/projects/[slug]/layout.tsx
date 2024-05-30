@@ -8,6 +8,7 @@ import { getProject } from '@/lib/actions/get-project'
 // import ProjectProvider from '@/components/projects/project-provider'
 import { getRepo } from '@/lib/github'
 import prisma from '@/lib/prisma'
+import typesense from '@/lib/typesense'
 import { cn, constructMetadata, nFormatter } from '@/lib/utils'
 import { BadgeCheck, Globe, Star } from 'lucide-react'
 import Image from 'next/image'
@@ -50,22 +51,21 @@ export default async function ProjectLayout({
   const project = await getProject({ slug })
   if (!project) notFound()
 
-  // const { stars } = await getRepo(project.githubLink.url)
-  const stars = 2000
+  const { stars } = await getRepo(project.githubLink.url)
 
-  // if (stars !== project.stars) {
-  //   await Promise.allSettled([
-  //     prisma.project.update({
-  //       where: {
-  //         slug,
-  //       },
-  //       data: {
-  //         ...(stars !== project.stars && { stars }),
-  //       },
-  //     }),
-  //     typesense().collections('projects').documents(project.id).update({ stars }),
-  //   ])
-  // }
+  if (stars !== project.stars) {
+    await Promise.allSettled([
+      prisma.project.update({
+        where: {
+          slug,
+        },
+        data: {
+          ...(stars !== project.stars && { stars }),
+        },
+      }),
+      typesense().collections('projects').documents(project.id).update({ stars }),
+    ])
+  }
 
   return (
     <>
@@ -90,7 +90,7 @@ export default async function ProjectLayout({
           <div className='flex items-center space-x-2 py-2'>
             <Suspense>{/* <EditProjectButton project={project} /> */}</Suspense>
             <a
-              // href={project.githubLink.shortLink}
+              href={project.githubLink.shortLink}
               target='_blank'
               className={buttonLinkVariants({ variant: 'secondary' })}
             >

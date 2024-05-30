@@ -32,7 +32,7 @@ export async function submitProject(url: string) {
       logo: githubData.logo,
       gradient: PROJECT_GRADIENTS[Math.floor(Math.random() * PROJECT_GRADIENTS.length)],
       stars: githubData.stars,
-      verified: githubData.stars > 1000, // automatically verify projects with > 1000 stars
+      verified: githubData.stars > 500, // automatically verify projects with > 1000 stars
       // users: {
       //   create: {
       //     userId: 'test',
