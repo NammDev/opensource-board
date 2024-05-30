@@ -8,10 +8,12 @@ export type ProjectHit = SearchResponseHit<
 
 const typesense = ({ client }: { client?: boolean } = {}) => {
   return new Typesense.Client({
-    apiKey: 'izVnm7SfKpQtOkFKOrUrDvmU4LIdbmQq',
+    apiKey: client
+      ? process.env.NEXT_PUBLIC_TYPESENSE_SEARCH_ONLY_API_KEY!
+      : process.env.TYPESENSE_API_KEY!,
     nodes: [
       {
-        host: 'o4b6gfuzpa13yi98p-1.a1.typesense.net',
+        host: process.env.NEXT_PUBLIC_TYPESENSE_HOST!,
         port: 443,
         protocol: 'https',
       },

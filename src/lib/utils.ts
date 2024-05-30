@@ -46,8 +46,7 @@ export function constructMetadata({
 
 export const getUrlWithRef = (url: string) => {
   const urlWithRef = new URL(url)
-  urlWithRef.searchParams.set('ref', 'ossgallery')
-
+  urlWithRef.searchParams.set('ref', 'nammdev')
   return urlWithRef.toString()
 }
 
