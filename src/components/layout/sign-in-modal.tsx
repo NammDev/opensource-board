@@ -1,7 +1,8 @@
-import { Button, Github, Modal } from '@dub/ui'
-import { signIn } from 'next-auth/react'
 import Image from 'next/image'
 import { Dispatch, SetStateAction, useCallback, useMemo, useState } from 'react'
+import { Modal } from '../ui/modal'
+import { Button } from '../ui/button'
+import Github from '../icons/github'
 
 const SignInModal = ({
   showSignInModal,
@@ -40,7 +41,7 @@ const SignInModal = ({
           loading={signInClicked}
           onClick={() => {
             setSignInClicked(true)
-            signIn('github')
+            // signIn('github')
           }}
         />
       </div>
