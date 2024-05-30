@@ -1,4 +1,4 @@
-// import SearchBar, { SearchBarPlaceholder } from '@/components/ui/search-bar'
+import SearchBar, { SearchBarPlaceholder } from '@/components/app-ui/search-bar'
 import Twitter from '@/components/icons/twitter'
 import ProjectList from '@/components/projects/project-list'
 import { Suspense } from 'react'
@@ -33,9 +33,9 @@ export default function Home() {
           className='mx-auto mt-6 flex animate-fade-up items-center justify-center space-x-5 opacity-0'
           style={{ animationDelay: '0.3s', animationFillMode: 'forwards' }}
         >
-          {/* <Suspense fallback={<SearchBarPlaceholder />}>
+          <Suspense fallback={<SearchBarPlaceholder />}>
             <SearchBar />
-          </Suspense> */}
+          </Suspense>
         </div>
       </div>
 

@@ -43,7 +43,7 @@ export default function ProductHuntPopup() {
               className='h-24'
             />
             <div className='-mt-2 px-4'>
-              <p className='mb-1 font-medium text-gray-800'>We're live on Product Hunt!</p>
+              <p className='mb-1 font-medium text-gray-800'>We&apos;re live on Product Hunt!</p>
               <p className='text-sm text-gray-500 underline-offset-4 transition-all group-hover:text-gray-800 group-hover:underline'>
                 Join the conversation and help us get to #1 Product of the Day ↗
               </p>

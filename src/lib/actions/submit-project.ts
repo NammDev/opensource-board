@@ -59,6 +59,8 @@ export async function submitProject(url: string) {
       name: project.name,
       description: project.description,
       slug: project.slug,
+      stars: project.stars,
+      logo: project.logo,
     }),
   ])
 
