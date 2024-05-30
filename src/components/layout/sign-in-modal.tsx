@@ -17,13 +17,11 @@ const SignInModal = ({
   const [signInClicked, setSignInClicked] = useState(false)
 
   async function oauthSignIn(provider: OAuthStrategy) {
-    console.log('in here')
     if (!isLoaded) return null
     try {
-      console.log('before signin')
       await signIn.authenticateWithRedirect({
         strategy: provider,
-        redirectUrl: '/sso-callback',
+        redirectUrl: '/auth-callback',
         redirectUrlComplete: '/auth-callback',
       })
     } catch (err) {

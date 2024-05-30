@@ -7,8 +7,12 @@ import prisma from '@/lib/prisma'
 import { PROJECT_GRADIENTS } from '@/components/projects/project-constants'
 import { shortenAndCreateLink } from '../dub'
 import typesense from '../typesense'
+import { getCachedAuthUser } from './users'
 
 export async function submitProject(url: string) {
+  const user = await getCachedAuthUser()
+  if (!user) return new Error('User is not authenticated.')
+
   const github = getUrlFromString(url)
   if (!github) throw new Error('Please provide a GitHub repository')
 
@@ -35,7 +39,7 @@ export async function submitProject(url: string) {
       verified: githubData.stars > 500, // automatically verify projects with > 1000 stars
       users: {
         create: {
-          userId: 'test',
+          userId: user.id,
           role: 'Submitter',
         },
       },

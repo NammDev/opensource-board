@@ -2,10 +2,6 @@ import { buttonLinkVariants } from '@/components/app-ui/button-link'
 import ProjectLayoutTabs from '@/components/projects/project-layout-tabs'
 import ProjectProvider from '@/components/projects/project-provider'
 import { getProject } from '@/lib/actions/get-project'
-// import EditGradientPopover from '@/components/projects/edit-gradient-popover'
-// import EditProjectButton from '@/components/projects/edit-project-button'
-// import ProjectLayoutTabs from '@/components/projects/project-layout-tabs'
-// import ProjectProvider from '@/components/projects/project-provider'
 import { getRepo } from '@/lib/github'
 import prisma from '@/lib/prisma'
 import typesense from '@/lib/typesense'
@@ -68,59 +64,63 @@ export default async function ProjectLayout({
   }
 
   return (
-    <>
-      <ProjectProvider props={project}>
-        <div
-          className={cn(
-            'relative aspect-[4/1] w-full rounded-t-2xl bg-gradient-to-tr',
-            project.gradient
-          )}
-        >
-          <Suspense>{/* <EditGradientPopover project={project} /> */}</Suspense>
-        </div>
-        <div className='relative -mt-8 flex items-center justify-between px-4 sm:-mt-12 sm:items-end md:pr-0'>
-          <Image
-            src={project.logo}
-            alt={project.name}
-            width={100}
-            height={100}
-            className='h-16 w-16 rounded-full bg-white p-2 sm:h-24 sm:w-24'
-            unoptimized
-          />
-          <div className='flex items-center space-x-2 py-2'>
-            <Suspense>{/* <EditProjectButton project={project} /> */}</Suspense>
+    <ProjectProvider props={project}>
+      <div
+        className={cn(
+          'relative aspect-[4/1] w-full rounded-t-2xl bg-gradient-to-tr',
+          project.gradient
+        )}
+      >
+        <Suspense>
+          {/* <EditGradientPopover project={project} /> */}
+          <p>EditGradientPopover</p>
+        </Suspense>
+      </div>
+      <div className='relative -mt-8 flex items-center justify-between px-4 sm:-mt-12 sm:items-end md:pr-0'>
+        <Image
+          src={project.logo}
+          alt={project.name}
+          width={100}
+          height={100}
+          className='h-16 w-16 rounded-full bg-white p-2 sm:h-24 sm:w-24'
+          unoptimized
+        />
+        <div className='flex items-center space-x-2 py-2'>
+          <Suspense>
+            {/* <EditProjectButton project={project} /> */}
+            <p>EditProjectButton</p>
+          </Suspense>
+          <a
+            href={project.githubLink.shortLink}
+            target='_blank'
+            className={buttonLinkVariants({ variant: 'secondary' })}
+          >
+            <Star className='h-4 w-4' />
+            <p className='text-sm'>{nFormatter(stars, { full: true })}</p>
+          </a>
+          {project.websiteLink && (
             <a
-              href={project.githubLink.shortLink}
+              href={project.websiteLink.shortLink}
               target='_blank'
-              className={buttonLinkVariants({ variant: 'secondary' })}
+              className={buttonLinkVariants()}
             >
-              <Star className='h-4 w-4' />
-              <p className='text-sm'>{nFormatter(stars, { full: true })}</p>
+              <Globe className='h-4 w-4' />
+              <p className='text-sm'>Website</p>
             </a>
-            {project.websiteLink && (
-              <a
-                href={project.websiteLink.shortLink}
-                target='_blank'
-                className={buttonLinkVariants()}
-              >
-                <Globe className='h-4 w-4' />
-                <p className='text-sm'>Website</p>
-              </a>
-            )}
-          </div>
+          )}
         </div>
-        <div className='max-w-lg p-4 pb-0'>
-          <div className='flex items-center space-x-2'>
-            <h1 className='font-display text-3xl font-bold'>{project.name}</h1>
-            {project.verified && <BadgeCheck className='h-8 w-8 text-white' fill='#1c9bef' />}
-          </div>
-          <p className='mt-2 text-gray-500'>{project.description}</p>
+      </div>
+      <div className='max-w-lg p-4 pb-0'>
+        <div className='flex items-center space-x-2'>
+          <h1 className='font-display text-3xl font-bold'>{project.name}</h1>
+          {project.verified && <BadgeCheck className='h-8 w-8 text-white' fill='#1c9bef' />}
         </div>
-        <ProjectLayoutTabs />
-        <div className='relative mx-4 flex min-h-[22rem] items-center justify-center rounded-xl border border-gray-200 bg-white p-4'>
-          {children}
-        </div>
-      </ProjectProvider>
-    </>
+        <p className='mt-2 text-gray-500'>{project.description}</p>
+      </div>
+      <ProjectLayoutTabs />
+      <div className='relative mx-4 flex min-h-[22rem] items-center justify-center rounded-xl border border-gray-200 bg-white p-4'>
+        {children}
+      </div>
+    </ProjectProvider>
   )
 }

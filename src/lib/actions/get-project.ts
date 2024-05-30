@@ -14,13 +14,13 @@ export const getProject = cache(async ({ id, slug }: { id?: string; slug?: strin
         select: {
           role: true,
           userId: true,
-          // user: {
-          //   select: {
-          //     name: true,
-          //     username: true,
-          //     image: true,
-          //   },
-          // },
+          user: {
+            select: {
+              name: true,
+              username: true,
+              image: true,
+            },
+          },
         },
       },
     },
@@ -32,12 +32,12 @@ export const getProject = cache(async ({ id, slug }: { id?: string; slug?: strin
     ...project,
     githubLink,
     websiteLink,
-    // users: project.users.map(({ userId, role, user }) => ({
-    //   id: userId,
-    //   role,
-    //   name: user.name,
-    //   username: user.username,
-    //   image: user.image,
-    // })),
+    users: project.users.map(({ userId, role, user }) => ({
+      id: userId,
+      role,
+      name: user.name,
+      username: user.username,
+      image: user.image,
+    })),
   } as EnrichedProjectProps
 })

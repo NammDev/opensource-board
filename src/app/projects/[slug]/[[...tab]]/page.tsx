@@ -1,8 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable jsx-a11y/alt-text */
-// import ProjectAnalytics from '@/components/projects/project-analytics'
-// import ProjectTeam from '@/components/projects/project-team'
 import ProjectAnalytics from '@/components/projects/project-analytics'
+import ProjectTeam from '@/components/projects/project-team'
 import { getProject } from '@/lib/actions/get-project'
 import { notFound } from 'next/navigation'
 
@@ -29,8 +28,7 @@ export default async function Project({
   }
 
   if (tab?.[0] === 'team') {
-    // return <ProjectTeam project={project} />
-    return <h1>ProjectTeam</h1>
+    return <ProjectTeam project={project} />
   }
 
   if (tab?.[0] === 'contributors') {
