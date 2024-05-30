@@ -112,7 +112,7 @@ export default function SearchBar() {
                 <Highlighter
                   highlightClassName='underline text-gray-800 bg-transparent'
                   searchWords={
-                    item.highlights.find((h) => h.field === 'name')?.matched_tokens || []
+                    item.highlights?.find((h) => h.field === 'name')?.matched_tokens?.flat() ?? []
                   }
                   autoEscape={true}
                   textToHighlight={item.document.name}
@@ -121,7 +121,9 @@ export default function SearchBar() {
                 <Highlighter
                   highlightClassName='underline text-gray-800 bg-transparent'
                   searchWords={
-                    item.highlights.find((h) => h.field === 'description')?.matched_tokens || []
+                    item.highlights
+                      ?.find((h) => h.field === 'description')
+                      ?.matched_tokens?.flat() ?? []
                   }
                   autoEscape={true}
                   textToHighlight={item.document.description}
