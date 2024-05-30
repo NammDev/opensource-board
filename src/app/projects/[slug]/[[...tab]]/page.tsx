@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 // import ProjectAnalytics from '@/components/projects/project-analytics'
 // import ProjectTeam from '@/components/projects/project-team'
+import ProjectAnalytics from '@/components/projects/project-analytics'
 import { getProject } from '@/lib/actions/get-project'
 import { notFound } from 'next/navigation'
 
@@ -44,6 +45,5 @@ export default async function Project({
     )
   }
 
-  // return <ProjectAnalytics project={project} />
-  return <h1>ProjectAnalytics</h1>
+  return <ProjectAnalytics project={project} />
 }
