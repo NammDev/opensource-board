@@ -4,8 +4,8 @@ import { Dub } from 'dub'
 import { getUrlWithRef, nanoid } from './utils'
 
 export const dub = new Dub({
-  token: 'g2xlRsH0V09uhMchhUWGazbf',
-  workspaceId: 'ws_clwrvus7f000j123de4b5dc3o',
+  token: process.env.DUB_API_KEY,
+  workspaceId: process.env.DUB_WORKSPACE_ID,
 })
 
 export async function shortenAndCreateLink({
