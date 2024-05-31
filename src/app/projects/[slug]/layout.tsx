@@ -47,7 +47,6 @@ export default async function ProjectLayout({
   }
   children: React.ReactNode
 }) {
-  const user = await getCachedAuthUser()
   const project = await getProject({ slug })
   if (!project) notFound()
 

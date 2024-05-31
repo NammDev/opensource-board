@@ -8,7 +8,6 @@ export default async function AuthCallbackPage() {
 
   if (userAuth) {
     userData = await getCachedUser()
-    console.log(userData)
     if (!userData) {
       userData = await createUser()
     }
