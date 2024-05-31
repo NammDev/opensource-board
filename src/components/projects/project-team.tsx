@@ -2,6 +2,7 @@ import { EnrichedProjectProps } from '@/lib/types'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
 import Link from 'next/link'
+import EditTeamButton from './edit-team-button'
 
 export default async function ProjectTeam({ project }: { project: EnrichedProjectProps }) {
   const { users } = project
@@ -9,8 +10,7 @@ export default async function ProjectTeam({ project }: { project: EnrichedProjec
   return (
     <>
       <div className='absolute right-4 top-4'>
-        {/* <EditTeamButton project={project} /> */}
-        <p>Edit team Button</p>
+        <EditTeamButton project={project} />
       </div>
       <div
         className={cn(

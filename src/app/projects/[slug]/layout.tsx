@@ -1,5 +1,6 @@
 import { buttonLinkVariants } from '@/components/app-ui/button-link'
 import EditGradientPopover from '@/components/projects/edit-gradient-popover'
+import EditProjectButton from '@/components/projects/edit-project-button'
 import ProjectLayoutTabs from '@/components/projects/project-layout-tabs'
 import ProjectProvider from '@/components/projects/project-provider'
 import { getProject } from '@/lib/actions/get-project'
@@ -89,8 +90,7 @@ export default async function ProjectLayout({
         />
         <div className='flex items-center space-x-2 py-2'>
           <Suspense>
-            {/* <EditProjectButton project={project} /> */}
-            <p>EditProjectButton</p>
+            <EditProjectButton project={project} />
           </Suspense>
           <a
             href={project.githubLink.shortLink}
@@ -119,7 +119,9 @@ export default async function ProjectLayout({
         </div>
         <p className='mt-2 text-gray-500'>{project.description}</p>
       </div>
+
       <ProjectLayoutTabs />
+
       <div className='relative mx-4 flex min-h-[22rem] items-center justify-center rounded-xl border border-gray-200 bg-white p-4'>
         {children}
       </div>

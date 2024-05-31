@@ -2,17 +2,17 @@
 
 import { EnrichedProjectProps } from '@/lib/types'
 import { Dispatch, ReactNode, SetStateAction, createContext } from 'react'
-// import { useEditProjectModal } from './edit-project-modal'
-// import { useEditTeamModal } from './edit-team-modal'
+import { useEditProjectModal } from './edit-project-modal'
+import { useEditTeamModal } from './edit-team-modal'
 
 export const ProjectContext = createContext<{
   props: EnrichedProjectProps
-  // setShowEditProjectModal: Dispatch<SetStateAction<boolean>>
-  // setShowEditTeamModal: Dispatch<SetStateAction<boolean>>
+  setShowEditProjectModal: Dispatch<SetStateAction<boolean>>
+  setShowEditTeamModal: Dispatch<SetStateAction<boolean>>
 }>({
   props: {} as EnrichedProjectProps,
-  // setShowEditProjectModal: () => {},
-  // setShowEditTeamModal: () => {},
+  setShowEditProjectModal: () => {},
+  setShowEditTeamModal: () => {},
 })
 
 export default function ProjectProvider({
@@ -22,23 +22,23 @@ export default function ProjectProvider({
   children: ReactNode
   props: EnrichedProjectProps
 }) {
-  // const { EditProjectModal, setShowEditProjectModal } = useEditProjectModal({
-  //   props,
-  // })
-  // const { EditTeamModal, setShowEditTeamModal } = useEditTeamModal({
-  //   props,
-  // })
+  const { EditProjectModal, setShowEditProjectModal } = useEditProjectModal({
+    props,
+  })
+  const { EditTeamModal, setShowEditTeamModal } = useEditTeamModal({
+    props,
+  })
 
   return (
     <ProjectContext.Provider
       value={{
         props,
-        // setShowEditProjectModal,
-        // setShowEditTeamModal,
+        setShowEditProjectModal,
+        setShowEditTeamModal,
       }}
     >
-      {/* <EditProjectModal />
-      <EditTeamModal /> */}
+      <EditProjectModal />
+      <EditTeamModal />
       {children}
     </ProjectContext.Provider>
   )
