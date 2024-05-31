@@ -1,16 +1,20 @@
 'use client'
 
-import { Session } from '@/lib/auth'
-import { Popover } from '@dub/ui'
 import { LayoutDashboard, LogOut } from 'lucide-react'
-import { signOut } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
+import { Popover } from '../ui/popover'
+import { getUserEmail, getUsernameFromEmail } from '@/lib/utils'
+import { useClerk, useUser } from '@clerk/nextjs'
 
-export default function UserDropdown({ session }: { session: Session }) {
-  const { name, email, image, username } = session?.user || {}
+export default function UserDropdown() {
+  const { user } = useUser()
+  const { signOut } = useClerk()
+
   const [openPopover, setOpenPopover] = useState(false)
+  const email = getUserEmail(user)
+  const username = getUsernameFromEmail(email)
 
   if (!email) return null
 
@@ -19,7 +23,7 @@ export default function UserDropdown({ session }: { session: Session }) {
       content={
         <div className='w-full rounded-md bg-white p-2 sm:w-56'>
           <div className='p-2'>
-            {name && <p className='truncate text-sm font-medium text-gray-900'>{name}</p>}
+            {username && <p className='truncate text-sm font-medium text-gray-900'>{username}</p>}
             <p className='truncate text-sm text-gray-500'>{email}</p>
           </div>
           <Link
@@ -31,7 +35,7 @@ export default function UserDropdown({ session }: { session: Session }) {
           </Link>
           <button
             className='relative flex w-full items-center justify-start space-x-2 rounded-md p-2 text-left text-sm transition-all duration-75 hover:bg-gray-100'
-            onClick={() => signOut()}
+            onClick={() => signOut({ redirectUrl: '/' })}
           >
             <LogOut className='h-4 w-4' />
             <p className='text-sm'>Logout</p>
@@ -48,7 +52,7 @@ export default function UserDropdown({ session }: { session: Session }) {
       >
         <Image
           alt={email}
-          src={image || `https://avatars.dicebear.com/api/micah/${email}.svg`}
+          src={user?.imageUrl || `https://avatars.dicebear.com/api/micah/${email}.svg`}
           width={40}
           height={40}
           unoptimized

@@ -3,15 +3,16 @@
 
 import { Star } from 'lucide-react'
 import Link from 'next/link'
-// import { SubmitProjectButton } from '../projects/submit-project-button'
 import { useScroll } from '@/hooks/use-scroll'
 import { cn, nFormatter } from '@/lib/utils'
 import { buttonLinkVariants } from '../app-ui/button-link'
 import { SubmitProjectButton } from '../projects/submit-project-button'
-// import UserDropdown from './user-dropdown'
+import { useAuth } from '@clerk/clerk-react'
+import UserDropdown from './user-dropdown'
 
 export default function NavBar({ stars }: { stars: number }) {
   const scrolled = useScroll(50)
+  const { isSignedIn } = useAuth()
 
   return (
     <div
@@ -33,7 +34,7 @@ export default function NavBar({ stars }: { stars: number }) {
             <p className='text-sm'>{nFormatter(stars, { full: true })}</p>
           </a>
           <SubmitProjectButton />
-          {/* {session && <UserDropdown session={session} />} */}
+          {isSignedIn && <UserDropdown />}
         </div>
       </div>
     </div>

@@ -130,7 +130,7 @@ export const nanoid = (chars?: number) => {
   )()
 }
 
-export function getUserEmail(user: User | null) {
+export function getUserEmail(user: any | null) {
   const email =
     user?.emailAddresses?.find((e) => e.id === user.primaryEmailAddressId)?.emailAddress ?? ''
   return email
