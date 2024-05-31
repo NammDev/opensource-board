@@ -2,7 +2,7 @@ import { createUser, getCachedAuthUser, getCachedUser } from '@/lib/actions/user
 import { Loader2 } from 'lucide-react'
 import { redirect } from 'next/navigation'
 
-export default async function SSOCallbackPage() {
+export default async function AuthCallbackPage() {
   let userData = null
   const userAuth = await getCachedAuthUser()
 

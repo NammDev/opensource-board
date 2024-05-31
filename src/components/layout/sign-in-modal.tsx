@@ -19,11 +19,19 @@ const SignInModal = ({
   async function oauthSignIn(provider: OAuthStrategy) {
     if (!isLoaded) return null
     try {
-      await signIn.authenticateWithRedirect({
-        strategy: provider,
-        redirectUrl: '/sso-callback',
-        redirectUrlComplete: '/auth-callback',
-      })
+      await signIn
+        .authenticateWithRedirect({
+          strategy: provider,
+          redirectUrl: '/sso-callback',
+          redirectUrlComplete: '/auth-callback',
+        })
+        .then((res) => {
+          console.log(res)
+        })
+        .catch((err: any) => {
+          console.log(err.errors)
+          console.error(err, null, 2)
+        })
     } catch (err) {
       console.log(err)
     } finally {
