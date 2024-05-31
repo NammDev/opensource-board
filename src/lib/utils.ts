@@ -143,3 +143,5 @@ export function getUsernameFromEmail(email: string) {
   }
   return ''
 }
+
+export const trim = (u: unknown) => (typeof u === 'string' ? u.trim() : u)

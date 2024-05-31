@@ -1,7 +1,9 @@
 import { buttonLinkVariants } from '@/components/app-ui/button-link'
+import EditGradientPopover from '@/components/projects/edit-gradient-popover'
 import ProjectLayoutTabs from '@/components/projects/project-layout-tabs'
 import ProjectProvider from '@/components/projects/project-provider'
 import { getProject } from '@/lib/actions/get-project'
+import { getCachedAuthUser } from '@/lib/actions/users'
 import { getRepo } from '@/lib/github'
 import prisma from '@/lib/prisma'
 import typesense from '@/lib/typesense'
@@ -44,6 +46,7 @@ export default async function ProjectLayout({
   }
   children: React.ReactNode
 }) {
+  const user = await getCachedAuthUser()
   const project = await getProject({ slug })
   if (!project) notFound()
 
@@ -72,8 +75,7 @@ export default async function ProjectLayout({
         )}
       >
         <Suspense>
-          {/* <EditGradientPopover project={project} /> */}
-          <p>EditGradientPopover</p>
+          <EditGradientPopover project={project} />
         </Suspense>
       </div>
       <div className='relative -mt-8 flex items-center justify-between px-4 sm:-mt-12 sm:items-end md:pr-0'>
