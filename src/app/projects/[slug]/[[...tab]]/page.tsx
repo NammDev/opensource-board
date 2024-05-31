@@ -5,14 +5,6 @@ import ProjectTeam from '@/components/projects/project-team'
 import { getProject } from '@/lib/actions/get-project'
 import { notFound } from 'next/navigation'
 
-export async function generateStaticParams() {
-  return [
-    {
-      tab: [], // for the root page
-    },
-  ]
-}
-
 export default async function Project({
   params: { slug, tab },
 }: {
