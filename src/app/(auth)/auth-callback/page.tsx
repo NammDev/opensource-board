@@ -8,6 +8,7 @@ export default async function SSOCallbackPage() {
 
   if (userAuth) {
     userData = await getCachedUser()
+    console.log(userData)
     if (!userData) {
       userData = await createUser()
     }
