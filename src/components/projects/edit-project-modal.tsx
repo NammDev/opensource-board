@@ -4,7 +4,7 @@ import { EnrichedProjectProps } from '@/lib/types'
 import Image from 'next/image'
 import { Dispatch, SetStateAction, useCallback, useMemo, useState } from 'react'
 import { Modal } from '../ui/modal'
-// import EditProjectForm from './edit-project-form'
+import EditProjectForm from './edit-project-form'
 
 const EditProjectModal = ({
   showEditProjectModal,
@@ -29,7 +29,7 @@ const EditProjectModal = ({
         <h3 className='font-display text-xl font-bold'>Edit Project</h3>
       </div>
 
-      {/* <EditProjectForm props={props} setShowEditProjectModal={setShowEditProjectModal} /> */}
+      <EditProjectForm props={props} setShowEditProjectModal={setShowEditProjectModal} />
     </Modal>
   )
 }
