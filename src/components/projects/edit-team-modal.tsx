@@ -3,8 +3,8 @@
 import { EnrichedProjectProps } from '@/lib/types'
 import Image from 'next/image'
 import { Dispatch, SetStateAction, useCallback, useMemo, useState } from 'react'
-// import EditTeamForm from './edit-team-form'
 import { Modal } from '../ui/modal'
+import EditTeamForm from './edit-team-form'
 
 const EditTeamModal = ({
   showEditTeamModal,
@@ -29,7 +29,7 @@ const EditTeamModal = ({
         <h3 className='font-display text-xl font-bold'>Edit Team</h3>
       </div>
 
-      {/* <EditTeamForm props={props} setShowEditTeamModal={setShowEditTeamModal} /> */}
+      <EditTeamForm props={props} setShowEditTeamModal={setShowEditTeamModal} />
     </Modal>
   )
 }
