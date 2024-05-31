@@ -21,7 +21,7 @@ const SignInModal = ({
     try {
       await signIn.authenticateWithRedirect({
         strategy: provider,
-        redirectUrl: '/auth-callback',
+        redirectUrl: '/sso-callback',
         redirectUrlComplete: '/auth-callback',
       })
     } catch (err) {
