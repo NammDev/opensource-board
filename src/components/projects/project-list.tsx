@@ -30,11 +30,11 @@ async function ProjectListRSC() {
     <div className='mx-5 md:mx-0'>
       <div className='grid gap-4'>
         <h2 className='font-display text-2xl font-semibold'>Featured</h2>
-        {/* {featuredProjects.every((project) => project === undefined) ? (
+        {featuredProjects.every((project) => project === undefined) ? (
           <h1>No feature Project</h1>
         ) : (
           <ProjectGrid projects={featuredProjects} />
-        )} */}
+        )}
       </div>
 
       <div className='mb-8 mt-12 border-t border-gray-200' />
